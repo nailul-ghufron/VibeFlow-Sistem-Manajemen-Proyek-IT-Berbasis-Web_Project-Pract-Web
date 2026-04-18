@@ -9,19 +9,19 @@ $url_parts = explode('/', $url);
 $controller_name = isset($url_parts[0]) && $url_parts[0] != '' ? $url_parts[0] : 'dashboard';
 $action_name = isset($url_parts[1]) ? $url_parts[1] : 'index';
 
-// Map controller paths
+// Map controller paths and their exact class names
 $controllers_map = [
-    'auth' => 'AuthController.php',
-    'dashboard' => 'DashboardController.php',
-    'projects' => 'ProjectController.php',
-    'tasks' => 'TaskController.php',
-    'documents' => 'DocumentController.php',
-    'reports' => 'ReportController.php'
+    'auth' => ['file' => 'AuthController.php', 'class' => 'AuthController'],
+    'dashboard' => ['file' => 'DashboardController.php', 'class' => 'DashboardController'],
+    'projects' => ['file' => 'ProjectController.php', 'class' => 'ProjectController'],
+    'tasks' => ['file' => 'TaskController.php', 'class' => 'TaskController'],
+    'documents' => ['file' => 'DocumentController.php', 'class' => 'DocumentController'],
+    'reports' => ['file' => 'ReportController.php', 'class' => 'ReportController']
 ];
 
 if (array_key_exists($controller_name, $controllers_map)) {
-    require_once "controllers/" . $controllers_map[$controller_name];
-    $class_name = ucfirst($controller_name) . "Controller";
+    require_once "controllers/" . $controllers_map[$controller_name]['file'];
+    $class_name = $controllers_map[$controller_name]['class'];
     
     // Simple basic dependency resolution or static call can go here,
     // but for vanilla PHP we'll instantiate and call the method.

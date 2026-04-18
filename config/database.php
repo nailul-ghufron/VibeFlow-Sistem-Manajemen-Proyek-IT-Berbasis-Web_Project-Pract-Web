@@ -1,8 +1,9 @@
 <?php
-define('DB_HOST', 'localhost');
+// Sesuaikan dengan environment variables di docker-compose.yml
+define('DB_HOST', 'db'); // BUKAN 'localhost', gunakan nama service docker-nya
 define('DB_NAME', 'vibeflow_db');
-define('DB_USER', 'root');
-define('DB_PASS', '');
+define('DB_USER', 'vibeuser'); 
+define('DB_PASS', 'vibepassword');
 
 class Database {
     private static $connection = null;

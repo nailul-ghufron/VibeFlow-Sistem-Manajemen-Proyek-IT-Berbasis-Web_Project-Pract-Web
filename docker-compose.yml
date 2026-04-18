@@ -1,0 +1,28 @@
+services:
+  web:
+    build: .
+    container_name: vibeflow_web
+    ports:
+      - "8000:80"
+    volumes:
+      - ./:/var/www/html/
+    depends_on:
+      - db
+
+  db:
+    image: mysql:8.0
+    container_name: vibeflow_db
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: vibeflow_db
+      MYSQL_USER: vibeuser
+      MYSQL_PASSWORD: vibepassword
+    volumes:
+      - db_data:/var/lib/mysql
+      # Baris ini akan otomatis meng-import database.sql milik Anda
+      - ./database.sql:/docker-entrypoint-initdb.d/init.sql
+    ports:
+      - "3306:3306"
+
+volumes:
+  db_data:

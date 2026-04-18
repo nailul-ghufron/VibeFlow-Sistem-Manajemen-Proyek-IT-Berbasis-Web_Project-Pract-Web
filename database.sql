@@ -84,9 +84,9 @@ CREATE TABLE IF NOT EXISTS `activity_logs` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- Seed Data
--- Passwords are 'password123' hashed with bcrypt: $2y$10$Q7eYh.eC.R1uO5g5S8E2oOT9N6E4p0Jt/k.wA6uU4qB6G7V6bA7Oa
+-- Passwords are 'password123' hashed with bcrypt: $2y$10$qBLwNN2e3QHdKl8c6HLUmObz2QtFW0W3sEb7PiN4ioaJh1CUmYdlG
 INSERT INTO `users` (`name`, `email`, `password`, `role`) VALUES
-('Super Admin', 'admin@vibeflow.com', '$2y$10$Q7eYh.eC.R1uO5g5S8E2oOT9N6E4p0Jt/k.wA6uU4qB6G7V6bA7Oa', 'super_admin'),
-('Project Manager One', 'pm@vibeflow.com', '$2y$10$Q7eYh.eC.R1uO5g5S8E2oOT9N6E4p0Jt/k.wA6uU4qB6G7V6bA7Oa', 'pm'),
-('Programmer One', 'dev@vibeflow.com', '$2y$10$Q7eYh.eC.R1uO5g5S8E2oOT9N6E4p0Jt/k.wA6uU4qB6G7V6bA7Oa', 'programmer'),
-('Client One', 'client@vibeflow.com', '$2y$10$Q7eYh.eC.R1uO5g5S8E2oOT9N6E4p0Jt/k.wA6uU4qB6G7V6bA7Oa', 'client');
+('Super Admin', 'admin@vibeflow.com', '$2y$10$qBLwNN2e3QHdKl8c6HLUmObz2QtFW0W3sEb7PiN4ioaJh1CUmYdlG', 'super_admin'),
+('Project Manager One', 'pm@vibeflow.com', '$2y$10$qBLwNN2e3QHdKl8c6HLUmObz2QtFW0W3sEb7PiN4ioaJh1CUmYdlG', 'pm'),
+('Programmer One', 'dev@vibeflow.com', '$2y$10$qBLwNN2e3QHdKl8c6HLUmObz2QtFW0W3sEb7PiN4ioaJh1CUmYdlG', 'programmer'),
+('Client One', 'client@vibeflow.com', '$2y$10$qBLwNN2e3QHdKl8c6HLUmObz2QtFW0W3sEb7PiN4ioaJh1CUmYdlG', 'client');
