@@ -34,12 +34,19 @@
     
     <?php include __DIR__ . '/sidebar.php'; ?>
 
-    <main class="flex-1 ml-64 flex flex-col min-h-screen">
+    <main class="flex-1 lg:ml-64 flex flex-col min-h-screen w-full transition-all duration-300">
         <!-- Top Header -->
-        <header class="h-16 glass-card sticky top-0 z-10 flex items-center justify-between px-8">
-            <div class="flex items-center text-slate-400">
-                <!-- Search could go here -->
-                <span class="text-sm font-medium uppercase tracking-wider"><?= htmlspecialchars($_SESSION['user_role'] ?? 'User') ?> Portal</span>
+        <header class="h-16 glass-card sticky top-0 z-10 flex items-center justify-between px-4 md:px-8">
+            <div class="flex items-center gap-4">
+                <button id="sidebar-toggle" class="lg:hidden p-2 text-slate-400 hover:text-white hover:bg-white/10 rounded-lg transition-colors">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
+                </button>
+                <div class="flex items-center text-slate-400">
+                    <span class="text-sm font-medium uppercase tracking-wider hidden md:block"><?= htmlspecialchars($_SESSION['user_role'] ?? 'User') ?> Portal</span>
+                    <span class="text-sm font-medium uppercase tracking-wider md:hidden">VibeFlow</span>
+                </div>
             </div>
             <div class="flex items-center gap-4">
                 <div class="text-right">
@@ -52,4 +59,40 @@
         </header>
 
         <!-- Main Content Area -->
-        <div class="p-8 flex-1">
+        <div class="p-4 md:p-8 flex-1">
+
+    <script>
+        const sidebar = document.getElementById('sidebar');
+        const sidebarOverlay = document.getElementById('sidebar-overlay');
+        const sidebarToggle = document.getElementById('sidebar-toggle');
+
+        function toggleSidebar() {
+            const isOpen = !sidebar.classList.contains('-translate-x-full');
+            
+            if (isOpen) {
+                // Close sidebar
+                sidebar.classList.add('-translate-x-full');
+                sidebarOverlay.classList.add('opacity-0');
+                setTimeout(() => {
+                    sidebarOverlay.classList.add('hidden');
+                }, 300);
+            } else {
+                // Open sidebar
+                sidebarOverlay.classList.remove('hidden');
+                setTimeout(() => {
+                    sidebarOverlay.classList.remove('opacity-0');
+                }, 10);
+                sidebar.classList.remove('-translate-x-full');
+            }
+        }
+
+        sidebarToggle.addEventListener('click', toggleSidebar);
+        sidebarOverlay.addEventListener('click', toggleSidebar);
+
+        // Close sidebar on escape key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && !sidebar.classList.contains('-translate-x-full')) {
+                toggleSidebar();
+            }
+        });
+    </script>

@@ -7,7 +7,8 @@ $nav_items = [
     ['url' => '/projects', 'icon' => '<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path></svg>', 'label' => 'Projects'],
 ];
 ?>
-<aside class="w-64 fixed h-screen bg-[#0f172a] border-r border-white/10 flex flex-col z-20">
+<div id="sidebar-overlay" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-30 hidden lg:hidden opacity-0 transition-opacity duration-300"></div>
+<aside id="sidebar" class="w-64 fixed h-screen bg-[#0f172a] border-r border-white/10 flex flex-col z-40 -translate-x-full lg:translate-x-0 transition-transform duration-300 ease-in-out shadow-2xl lg:shadow-none">
     <div class="h-16 flex items-center px-6 border-b border-white/10">
         <span class="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-500 drop-shadow-[0_0_8px_rgba(34,211,238,0.6)]">VibeFlow</span>
     </div>
