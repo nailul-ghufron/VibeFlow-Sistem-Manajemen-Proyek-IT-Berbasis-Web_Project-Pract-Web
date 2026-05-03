@@ -31,16 +31,36 @@
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
                     <label for="client_id" class="block text-sm font-medium text-slate-300 mb-2">Assign Client</label>
-                    <select id="client_id" name="client_id" required class="w-full px-4 py-3 bg-slate-800/50 border border-slate-700 rounded-lg focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500 text-slate-100 outline-none appearance-none">
+                    <select id="client_id" name="client_id" required class="w-full px-4 py-3 bg-slate-800/50 border border-slate-700 rounded-lg focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500 text-slate-100 outline-none">
                         <option value="">Select a client...</option>
                         <?php foreach ($clients as $client): ?>
                             <option value="<?= $client['id'] ?>"><?= htmlspecialchars($client['name']) ?></option>
                         <?php endforeach; ?>
                     </select>
                 </div>
+                <?php if ($_SESSION['user_role'] === 'super_admin'): ?>
+                <div>
+                    <label for="pm_id" class="block text-sm font-medium text-slate-300 mb-2">Assign Project Manager</label>
+                    <select id="pm_id" name="pm_id" required class="w-full px-4 py-3 bg-slate-800/50 border border-slate-700 rounded-lg focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500 text-slate-100 outline-none">
+                        <option value="">Select a PM...</option>
+                        <?php foreach ($pms as $pm): ?>
+                            <option value="<?= $pm['id'] ?>" <?= $_SESSION['user_id'] == $pm['id'] ? 'selected' : '' ?>><?= htmlspecialchars($pm['name']) ?></option>
+                        <?php endforeach; ?>
+                    </select>
+                </div>
+                <?php endif; ?>
+                <div>
+                    <label for="status" class="block text-sm font-medium text-slate-300 mb-2">Status</label>
+                    <select id="status" name="status" class="w-full px-4 py-3 bg-slate-800/50 border border-slate-700 rounded-lg focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500 text-slate-100 outline-none">
+                        <option value="planning">Planning</option>
+                        <option value="active">Active</option>
+                        <option value="completed">Completed</option>
+                        <option value="archived">Archived</option>
+                    </select>
+                </div>
                 <div>
                     <label for="deadline" class="block text-sm font-medium text-slate-300 mb-2">Deadline</label>
-                    <input type="date" id="deadline" name="deadline" required class="w-full px-4 py-3 bg-slate-800/50 border border-slate-700 rounded-lg focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500 text-slate-100 outline-none appearance-none">
+                    <input type="date" id="deadline" name="deadline" required class="w-full px-4 py-3 bg-slate-800/50 border border-slate-700 rounded-lg focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500 text-slate-100 outline-none">
                 </div>
             </div>
 

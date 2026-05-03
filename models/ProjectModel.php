@@ -53,14 +53,33 @@ class ProjectModel {
     }
 
     public function createProject($data) {
-        $stmt = $this->db->prepare("INSERT INTO projects (title, description, client_id, pm_id, deadline) VALUES (?, ?, ?, ?, ?)");
+        $stmt = $this->db->prepare("INSERT INTO projects (title, description, client_id, pm_id, deadline, status) VALUES (?, ?, ?, ?, ?, ?)");
         return $stmt->execute([
             $data['title'],
             $data['description'],
             $data['client_id'],
             $data['pm_id'],
-            $data['deadline']
+            $data['deadline'],
+            $data['status'] ?? 'planning'
         ]);
+    }
+
+    public function updateProject($id, $data) {
+        $stmt = $this->db->prepare("UPDATE projects SET title = ?, description = ?, client_id = ?, pm_id = ?, status = ?, deadline = ? WHERE id = ?");
+        return $stmt->execute([
+            $data['title'],
+            $data['description'],
+            $data['client_id'],
+            $data['pm_id'],
+            $data['status'],
+            $data['deadline'],
+            $id
+        ]);
+    }
+
+    public function deleteProject($id) {
+        $stmt = $this->db->prepare("DELETE FROM projects WHERE id = ?");
+        return $stmt->execute([$id]);
     }
 
     public function recalculateProgress($project_id) {

@@ -39,4 +39,22 @@ class TaskModel {
         $stmt = $this->db->prepare("UPDATE tasks SET status = ? WHERE id = ?");
         return $stmt->execute([$status, $task_id]);
     }
+
+    public function updateTask($id, $data) {
+        $stmt = $this->db->prepare("UPDATE tasks SET programmer_id = ?, title = ?, description = ?, priority = ?, status = ?, due_date = ? WHERE id = ?");
+        return $stmt->execute([
+            $data['programmer_id'],
+            $data['title'],
+            $data['description'],
+            $data['priority'],
+            $data['status'],
+            $data['due_date'],
+            $id
+        ]);
+    }
+
+    public function deleteTask($id) {
+        $stmt = $this->db->prepare("DELETE FROM tasks WHERE id = ?");
+        return $stmt->execute([$id]);
+    }
 }

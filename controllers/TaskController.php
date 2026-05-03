@@ -55,4 +55,42 @@ class TaskController {
         echo json_encode(['success' => false]);
         exit();
     }
+
+    public function edit($id) {
+        require_role(['pm', 'super_admin']);
+        $task = $this->taskModel->getTaskById($id);
+        if (!$task) die("Task Not Found");
+
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            if (validate_csrf_token($_POST['csrf_token'] ?? '')) {
+                $data = [
+                    'programmer_id' => $_POST['programmer_id'],
+                    'title' => $_POST['title'],
+                    'description' => $_POST['description'],
+                    'priority' => $_POST['priority'],
+                    'status' => $_POST['status'],
+                    'due_date' => !empty($_POST['due_date']) ? $_POST['due_date'] : null
+                ];
+                
+                $this->taskModel->updateTask($id, $data);
+                $this->projectModel->recalculateProgress($task['project_id']);
+                
+                header("Location: /projects/detail/" . $task['project_id']);
+                exit();
+            }
+        }
+    }
+
+    public function delete($id) {
+        require_role(['pm', 'super_admin']);
+        $task = $this->taskModel->getTaskById($id);
+        if (!$task) die("Task Not Found");
+
+        $project_id = $task['project_id'];
+        $this->taskModel->deleteTask($id);
+        $this->projectModel->recalculateProgress($project_id);
+        
+        header("Location: /projects/detail/" . $project_id);
+        exit();
+    }
 }

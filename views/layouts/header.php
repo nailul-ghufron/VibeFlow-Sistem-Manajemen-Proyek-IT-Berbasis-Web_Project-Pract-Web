@@ -4,6 +4,21 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>VibeFlow Dashboard</title>
+    <meta name="description" content="Modern and elegant IT project management solution built for teams.">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://vibeflow.com/">
+    <meta property="og:title" content="VibeFlow - Project Management System">
+    <meta property="og:description" content="Manage your IT projects with elegance and efficiency using VibeFlow.">
+    <meta property="og:image" content="/assets/VibeFlow.svg">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://vibeflow.com/">
+    <meta property="twitter:title" content="VibeFlow - Project Management System">
+    <meta property="twitter:description" content="Manage your IT projects with elegance and efficiency using VibeFlow.">
+    <meta property="twitter:image" content="/assets/VibeFlow.svg">
     <link rel="icon" type="image/svg+xml" href="/assets/VibeFlow.svg">
     <script src="https://cdn.tailwindcss.com"></script>
     <script>

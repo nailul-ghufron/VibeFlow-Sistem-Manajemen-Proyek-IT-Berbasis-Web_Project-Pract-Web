@@ -57,10 +57,17 @@
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
                         <?= date('M d, Y', strtotime($project['deadline'])) ?>
                     </div>
-                    <a href="/projects/detail/<?= $project['id'] ?>" class="text-cyan-400 hover:text-cyan-300 font-medium group flex items-center gap-1">
-                        Details 
-                        <svg class="w-4 h-4 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
-                    </a>
+                    <div class="flex items-center gap-3">
+                        <?php if ($_SESSION['user_role'] === 'super_admin' || ($_SESSION['user_role'] === 'pm' && $project['pm_id'] == $_SESSION['user_id'])): ?>
+                            <a href="/projects/edit/<?= $project['id'] ?>" class="text-slate-500 hover:text-cyan-400" title="Edit">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"></path></svg>
+                            </a>
+                        <?php endif; ?>
+                        <a href="/projects/detail/<?= $project['id'] ?>" class="text-cyan-400 hover:text-cyan-300 font-medium group flex items-center gap-1">
+                            Details 
+                            <svg class="w-4 h-4 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+                        </a>
+                    </div>
                 </div>
             </div>
         <?php endforeach; ?>

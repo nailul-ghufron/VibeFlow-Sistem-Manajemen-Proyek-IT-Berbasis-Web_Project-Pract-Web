@@ -39,16 +39,19 @@ class ProjectController {
         
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             if (validate_csrf_token($_POST['csrf_token'] ?? '')) {
+                $pm_id = $_SESSION['user_role'] === 'super_admin' ? $_POST['pm_id'] : $_SESSION['user_id'];
+                
                 $data = [
                     'title' => $_POST['title'],
                     'description' => $_POST['description'],
                     'client_id' => $_POST['client_id'],
-                    'pm_id' => $_SESSION['user_id'], // Auto set PM to creator
-                    'deadline' => $_POST['deadline']
+                    'pm_id' => $pm_id,
+                    'deadline' => $_POST['deadline'],
+                    'status' => $_POST['status'] ?? 'planning'
                 ];
                 
-                if (empty($data['title']) || empty($data['deadline'])) {
-                    $error = "Title and Deadline are required.";
+                if (empty($data['title']) || empty($data['deadline']) || empty($data['pm_id']) || empty($data['client_id'])) {
+                    $error = "Title, PM, Client, and Deadline are required.";
                 } else {
                     $this->projectModel->createProject($data);
                     header("Location: /projects");
@@ -58,7 +61,63 @@ class ProjectController {
         }
         
         $clients = $this->userModel->getUsersByRole('client');
+        $pms = $this->userModel->getUsersByRole('pm');
         require_once __DIR__ . '/../views/projects/create.php';
+    }
+
+    public function edit($id) {
+        require_role(['pm', 'super_admin']);
+        $project = $this->projectModel->getProjectById($id);
+        
+        if (!$project) {
+            die("Project Not Found");
+        }
+
+        // Authorization check for PM (Super Admin can edit any)
+        if ($_SESSION['user_role'] === 'pm' && $project['pm_id'] != $_SESSION['user_id']) {
+            die("Unauthorized");
+        }
+
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            if (validate_csrf_token($_POST['csrf_token'] ?? '')) {
+                $pm_id = $_SESSION['user_role'] === 'super_admin' ? $_POST['pm_id'] : $project['pm_id'];
+                
+                $data = [
+                    'title' => $_POST['title'],
+                    'description' => $_POST['description'],
+                    'client_id' => $_POST['client_id'],
+                    'pm_id' => $pm_id,
+                    'status' => $_POST['status'],
+                    'deadline' => $_POST['deadline']
+                ];
+
+                $this->projectModel->updateProject($id, $data);
+                header("Location: /projects/detail/" . $id);
+                exit();
+            }
+        }
+
+        $clients = $this->userModel->getUsersByRole('client');
+        $pms = $this->userModel->getUsersByRole('pm');
+        require_once __DIR__ . '/../views/projects/edit.php';
+    }
+
+    public function delete($id) {
+        require_role(['pm', 'super_admin']);
+        $project = $this->projectModel->getProjectById($id);
+        
+        if (!$project) {
+            die("Project Not Found");
+        }
+
+        // Authorization check
+        if ($_SESSION['user_role'] === 'pm' && $project['pm_id'] != $_SESSION['user_id']) {
+            die("Unauthorized");
+        }
+
+        $this->projectModel->deleteProject($id);
+        header("Location: /projects");
+        exit();
     }
 
     public function detail($id) {
